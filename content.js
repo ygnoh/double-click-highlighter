@@ -18,14 +18,22 @@ chrome.runtime.onMessage.addListener(function (msg) {
     function replace() {
         const text = window.getSelection().toString();
 
-        if (!/\w/.test(text)) {
+        if (/\W/.test(text)) {
             return;
         }
 
+        Array.from(document.getElementsByClassName(CLS)).forEach(el => {
+            el.outerHTML = el.textContent;
+        });
+
         Array.from(document.getElementsByTagName("span")).forEach(el => {
+            if (!el.textContent.includes(text)) {
+                return;
+            }
+
             el.innerHTML = el.textContent.replaceAll(
-                new RegExp(text, "g"),
-                `<span class=${CLS} style="background-color: yellow;">${text}</span>`
+                text,
+                `<span class="${CLS}" style="background-color: yellow;">${text}</span>`
             );
         });
     }
