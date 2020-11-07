@@ -18,9 +18,13 @@ chrome.runtime.onMessage.addListener(function (msg) {
     function replace() {
         const text = window.getSelection().toString();
 
+        if (!/\w/.test(text)) {
+            return;
+        }
+
         Array.from(document.getElementsByTagName("span")).forEach(el => {
             el.innerHTML = el.textContent.replaceAll(
-                new RegExp(`${text}`, "gi"),
+                new RegExp(text, "gi"),
                 `<span class=${CLS} style="background-color: yellow;">${text}</span>`
             );
         });
