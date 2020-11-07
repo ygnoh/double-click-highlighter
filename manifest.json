@@ -1,6 +1,6 @@
 {
   "name": "Auto highlight by double click",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Highlight a word by double click! This only works in github.com",
   "manifest_version": 2,
   "background": {
