@@ -4,8 +4,6 @@
 
 'use strict';
 
-chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-    if (changeInfo.status == 'complete') {
-        chrome.tabs.sendMessage(tabId, {name: "loaded"});
-    }
+chrome.webNavigation.onCompleted.addListener(function({tabId}) {
+    chrome.tabs.sendMessage(tabId, {name: "loaded"});
 });
