@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function (msg) {
         });
 
         Array.from(document.getElementsByTagName("span")).forEach(el => {
-            if (!el.textContent.includes(text)) {
+            if (!new RegExp(`[^\\w\\s]*\\b${text}\\b[^\\w\\s]*`).test(el.textContent)) {
                 return;
             }
 
