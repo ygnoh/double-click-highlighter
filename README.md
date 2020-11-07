@@ -1,6 +1,6 @@
-# auto-highlight
+# double-click highlighter
 
-This repository is for a chrome extension "Auto highlight by double click".
+This repository is for the chrome extension "double-click highlighter."
 
 By using this extension, you can easily highlight a word in github like:
 
