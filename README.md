@@ -1,6 +1,6 @@
 # double-click highlighter
 
-This repository is for the chrome extension "double-click highlighter."
+This repository is for the chrome extension "double-click highlighter." ([Donwload link](https://chrome.google.com/webstore/detail/double-click-highlighter/pjoefdookgagjjkdfimpdigdfgcidapa/related?hl=ko&authuser=2))
 
 By using this extension, you can easily highlight a word in github like:
 
