@@ -1,6 +1,6 @@
 # double-click highlighter
 
-Read codes faster. Using this, you can easily find same words by double-click. Do not find manually anymore!
+Read code faster. Using this, you can easily find and highlight same words by double-click. Don't do it manually anymore!
 
 [Chrome extension download link](https://chrome.google.com/webstore/detail/double-click-highlighter/pjoefdookgagjjkdfimpdigdfgcidapa/related?hl=ko&authuser=2)
 
