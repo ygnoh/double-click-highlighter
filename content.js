@@ -5,8 +5,6 @@ chrome.runtime.onMessage.addListener(msg => {
         return;
     }
 
-    const spans = Array.from(document.getElementsByTagName("span"));
-
     document.addEventListener("dblclick", highlight);
 
     document.addEventListener("keydown", e => {
@@ -35,7 +33,8 @@ chrome.runtime.onMessage.addListener(msg => {
         color();
 
         function color() {
-            spans.forEach(span => {
+            // todo using cache improve performance
+            Array.from(document.getElementsByTagName("span")).forEach(span => {
                 for (const node of span.childNodes) {
                     const {nodeType, nodeValue} = node;
 
