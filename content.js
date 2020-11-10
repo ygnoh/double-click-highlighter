@@ -36,24 +36,41 @@ chrome.runtime.onMessage.addListener(msg => {
 
         function color() {
             spans.forEach(span => {
-                const {textContent} = span;
+                for (const node of span.childNodes) {
+                    const {nodeType, nodeValue} = node;
 
-                if (!new RegExp(`[^\\w\\s]*\\b${text}\\b[^\\w\\s]*`).test(textContent)) {
-                    return;
+                    if (nodeType !== Node.TEXT_NODE ||
+                        !new RegExp(`[^\\w\\s]*\\b${text}\\b[^\\w\\s]*`).test(nodeValue)) {
+                        continue;
+                    }
+
+                    // todo what if it has many texts?
+                    const idx = nodeValue.indexOf(text);
+
+                    node.nodeValue = nodeValue.replace(text, "");
+
+                    const restNode = node.splitText(idx);
+
+                    span.insertBefore(createColored(), restNode);
                 }
-
-                // todo what about using appendChild?
-                span.innerHTML = textContent.replaceAll(
-                    text,
-                    `<span class="${CLS}" style="background-color: yellow;">${text}</span>`
-                );
             });
         }
-    }
 
-    function restore() {
-        Array.from(document.getElementsByClassName(CLS)).forEach(el => {
-            el.outerHTML = el.textContent;
-        });
+        function createColored() {
+            const colored = document.createElement("span");
+
+            colored.className = CLS;
+            colored.style.backgroundColor = "yellow";
+            colored.textContent = text;
+
+            return colored;
+        }
     }
 });
+
+function restore() {
+    Array.from(document.getElementsByClassName(CLS)).forEach(el => {
+        el.outerHTML = el.textContent;
+    });
+}
+
