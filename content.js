@@ -5,35 +5,19 @@ chrome.runtime.onMessage.addListener(msg => {
         return;
     }
 
-    document.addEventListener("dblclick", highlight);
+    document.addEventListener("dblclick", e => {
+        const text = window.getSelection().toString().trim();
+        const specialCharOrEmpty = /(?:\W|^$)/.test(text);
 
-    document.addEventListener("keydown", e => {
-        if (e.key !== "Escape") {
+        if (specialCharOrEmpty) {
             return;
         }
 
-        highlight(e);
-    });
+        removeHighlight();
+        highlight();
+        selectTarget();
 
-    function highlight(e) {
-        const text = window.getSelection().toString();
-        const specialChar = /\W/.test(text);
-
-        if (specialChar) {
-            return;
-        }
-
-        restoreElements();
-
-        if (!text.trim()) {
-            // esc
-            return;
-        }
-
-        color();
-        restoreSelection();
-
-        function color() {
+        function highlight() {
             // todo using cache improve performance
             Array.from(document.getElementsByTagName("span")).forEach(span => {
                 for (const node of span.childNodes) {
@@ -66,7 +50,7 @@ chrome.runtime.onMessage.addListener(msg => {
             return colored;
         }
 
-        function restoreSelection() {
+        function selectTarget() {
             const [node] = e.target.getElementsByClassName(CLS);
             const range = document.createRange();
 
@@ -74,10 +58,19 @@ chrome.runtime.onMessage.addListener(msg => {
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
         }
-    }
+    });
+
+    document.addEventListener("keydown", e => {
+        if (e.key !== "Escape") {
+            return;
+        }
+
+        window.getSelection().removeAllRanges();
+        removeHighlight();
+    });
 });
 
-function restoreElements() {
+function removeHighlight() {
     Array.from(document.getElementsByClassName(CLS)).forEach(el => {
         el.outerHTML = el.textContent;
     });
