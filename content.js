@@ -5,6 +5,10 @@ chrome.runtime.onMessage.addListener(msg => {
         return;
     }
 
+    run();
+});
+
+function run() {
     document.addEventListener("dblclick", e => {
         const text = window.getSelection().toString().trim();
         const specialCharOrEmpty = /(?:\W|^$)/.test(text);
@@ -68,7 +72,7 @@ chrome.runtime.onMessage.addListener(msg => {
         window.getSelection().removeAllRanges();
         removeHighlight();
     });
-});
+}
 
 function removeHighlight() {
     Array.from(document.getElementsByClassName(CLS)).forEach(el => {
