@@ -12,10 +12,10 @@ chrome.runtime.onMessage.addListener(msg => {
             return;
         }
 
-        highlight();
+        highlight(e);
     });
 
-    function highlight() {
+    function highlight(e) {
         const text = window.getSelection().toString();
         const specialChar = /\W/.test(text);
 
@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener(msg => {
             return;
         }
 
-        restore();
+        restoreElements();
 
         if (!text.trim()) {
             // esc
@@ -31,6 +31,7 @@ chrome.runtime.onMessage.addListener(msg => {
         }
 
         color();
+        restoreSelection();
 
         function color() {
             // todo using cache improve performance
@@ -64,10 +65,19 @@ chrome.runtime.onMessage.addListener(msg => {
 
             return colored;
         }
+
+        function restoreSelection() {
+            const [node] = e.target.getElementsByClassName(CLS);
+            const range = document.createRange();
+
+            range.selectNode(node);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
     }
 });
 
-function restore() {
+function restoreElements() {
     Array.from(document.getElementsByClassName(CLS)).forEach(el => {
         el.outerHTML = el.textContent;
     });
