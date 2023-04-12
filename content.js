@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(msg => {
     run();
 });
 
-export function run() {
+function run() {
     document.addEventListener("dblclick", e => {
         const text = window.getSelection().toString().trim();
         const specialCharOrEmpty = /(?:\W|^$)/.test(text);
