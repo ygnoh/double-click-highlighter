@@ -2,10 +2,10 @@
   "name": "double-click highlighter",
   "version": "1.1.2",
   "description": "Highlight a word by double click! This only works in github.com",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
